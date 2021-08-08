@@ -37,3 +37,22 @@ class Solution:
             pre,curr=curr,next
         return curr
 ##打家劫舍
+##首先考虑最简单的情况，只有一间则偷一间，有两间偷最大，对于K>2的情况，有两种：1）偷窃第K间，那么就不能偷K-1间，应该是前K-2间最大
+加第K间的金额；2）不偷窃第K间，偷窃总金额为前K-1间最大，用dp[i]表示前i间房屋能偷窃到的最高总金额，那么状态转移方程如下：
+dp[i]=max(dp[i-2]+nums[i],dp[i-1])
+边界条件：
+1) dp[0]=nums[0] 只有一间房屋，则偷窃该房屋
+2) dp[1]=max(nums[0],nums[1]) 只有两间房屋，选择其中金额较高的房屋进行偷窃
+​class Solution:
+    def rob(self, nums: List[int]) -> int:       
+        n=len(nums)
+        if n==1:
+            return nums[0]
+        first,second=nums[0],max(nums[0],nums[1])    
+        for i in range(2,n):
+            res=max(first+nums[i],second)
+            first,second=second,res
+        return second
+
+​
+
