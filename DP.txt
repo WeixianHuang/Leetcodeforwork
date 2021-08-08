@@ -1,3 +1,39 @@
-##for DP
+##For DP
+##斐波那契数
+class Solution:
+    def fib(self, n: int) -> int:
+        if n<2:
+            return n       
+        p,q,r=0,0,1
+        for i in range(2,n+1):
+            p,q=q,r
+            r=p+q
+        return r
+##第 N 个泰波那契数：
+class Solution:
+    def tribonacci(self, n: int) -> int:
+        if n<3:
+            return 1 if n else 0
+        x,y,z=0,1,1
+        for _ in range(n-2):
+            x,y,z=y,z,x+y+z
+        return z
 ##台阶问题：找到初始0阶是0步，1阶是1步，2阶是0+1阶步
-
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        x,y=0,1
+        for i in range(n):
+            z=y+x
+            x,y=y,z
+        return z
+##使用最小花费爬楼梯：给定一个代表爬每层楼梯的花销，每次可以爬一层或者两层。初始状态是dp[0]=dp[1]=0，状态转移方程：
+dp[i]=min(dp[i−1]+cost[i−1],dp[i−2]+cost[i−2])
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        pre,curr=0,0
+        n=len(cost)
+        for i in range(2,n+1):
+            next=min(curr+cost[i-1],pre+cost[i-2])
+            pre,curr=curr,next
+        return curr
+##打家劫舍
