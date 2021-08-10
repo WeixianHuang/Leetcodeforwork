@@ -81,4 +81,21 @@ class Solution:
 计算得到 dp[end] 即为下标范围 [start,end] 内可以偷窃到的最高总金额。
 分别取 (start,end)=(0,n−2) 和(start,end)=(1,n−1) 进行计算，其中n-2是倒数第二件，n-1是最后一间，取两个dp[end] 中的最大值，即可得到最终结果。
 小结：打家劫舍2相对于打家劫舍1，约束在于需要分情况讨论包含第一间和最后一间如何得到正确结果，所以DP很多时候初始值，边界条件，分情况讨论很重要。
+###删除并获得点数：当选择了某个数，该数存在重复，那么第一次选择该数时就已经把该数+1和该数-1的值给删掉了，后面该数就可以随便删除（即相加）
+class Solution:
+    def deleteAndEarn(self, nums: List[int]) -> int:
+        maxVal = max(nums)
+        total = [0] * (maxVal + 1)#构建连续数组maxVal大小，其中以原数组nums中的数值为新数组total的下标，这样子原来的+1 和-1问题就成了新数组的位置问题，转换成了邻居不能偷概念
+        for val in nums:
+            total[val] += val
+        
+        def rob(nums: List[int]) -> int:
+            size = len(nums)
+            first, second = nums[0], max(nums[0], nums[1])
+            for i in range(2, size):
+                first, second = second, max(first + nums[i], second)
+            return second
+        
+        return rob(total)
+
 
