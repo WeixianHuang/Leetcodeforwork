@@ -10,7 +10,7 @@ class Solution:
         # write code here
         if not pHead or not pHead.next:
             return pHead
-        last=None
+        last=None#惯用伎俩，避免再设置尾部None
         while pHead:
             tmp=pHead.next
             pHead.next=last
